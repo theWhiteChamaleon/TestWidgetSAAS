@@ -35,6 +35,7 @@ define("EmersonTest/scripts/Main", [
                 let lt = "";
                 let username = "c00004755994";
                 let password = "Emerson123";
+                let csrfValue = "";
 
               
 
@@ -103,13 +104,13 @@ define("EmersonTest/scripts/Main", [
                                         //lt = dataResp.lt;
                                         console.log("-----------success---------------");
                                         let csrfKey = dataResp2.csrf.name;
-                                        let csrfValue = dataResp2.csrf.value;
+                                        csrfValue = dataResp2.csrf.value;
                                         
                                         WAFData.proxifiedRequest(finalURL, {
                                             method: "Get",
                                             //proxy:"passport",
                                             headers: {
-                                                SecurityContext: encodeURIComponent("ctx::VPLMProjectLeader.Company Name.Common Space"),
+                                                SecurityContext: encodeURIComponent("VPLMProjectLeader.Company Name.Common Space"),
                                                 ENO_CSRF_TOKEN: csrfValue
                                                 //  'Content-Type': 'application/x-www-form-urlencoded',
                                                 //  'charset': 'UTF-8'
