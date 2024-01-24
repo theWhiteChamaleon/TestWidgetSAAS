@@ -102,9 +102,40 @@ define("EmersonTest/scripts/Main", [
                                     onComplete: function (dataResp2, headerResp2) {
                                         //lt = dataResp.lt;
                                         console.log("-----------success---------------");
-                                        debugger;
-                                        console.log("dataResp2",dataResp2,"headerResp2",headerResp2)
-
+                                        let csrfKey = dataResp2.csrf.name;
+                                        let csrfValue = dataResp2.csrf.value;
+                                        
+                                        WAFData.proxifiedRequest(finalURL, {
+                                            method: "Get",
+                                            //proxy:"passport",
+                                            headers: {
+                                                SecurityContext: "ctx::VPLMProjectLeader.Company Name.Common Space",
+                                                csrfKey: csrfValue
+                                                //  'Content-Type': 'application/x-www-form-urlencoded',
+                                                //  'charset': 'UTF-8'
+                                                //'Access-Control-Allow-Origin': "*",
+                                                //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                                                //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+        
+                                            },
+                                            data: {
+                                                // type: selectedType,
+                                                // limit: ObjectLimit
+                                            },
+                                            timeout: 150000,
+                                            type: "json",
+                                            onComplete: function (dataResp3, headerResp3) {
+                                                //lt = dataResp.lt;
+                                                console.log("-----------success----------2-----");
+                                               debugger;
+                                                
+                                                
+                                            },
+                                            onFailure: function (error2, responseDOMString2, headerResp2) {
+                                                debugger;
+                                                console.log("-----------Error---------------");
+                                            }
+                                        });
                                     },
                                     onFailure: function (error2, responseDOMString2, headerResp2) {
                                         debugger;
