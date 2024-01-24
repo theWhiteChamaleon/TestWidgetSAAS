@@ -35,17 +35,13 @@ define("EmersonTest/scripts/Main", [
                 let lt = "";
                 let username = "c00004755994";
                 let password = "Emerson123";
-                let csrfValue = "";
-                let csrfData = {};
+             
 
-              
-
-
-                 WAFData.proxifiedRequest(ltURL, {
+                WAFData.proxifiedRequest(ltURL, {
                     method: "Get",
-                	//proxy:"passport",
+                    //proxy:"passport",
                     headers: {
-                         SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
+                        SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
                         //'Access-Control-Allow-Origin': "*",
                         //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
                         //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
@@ -61,117 +57,114 @@ define("EmersonTest/scripts/Main", [
                         lt = dataResp.lt;
 
                         if (lt) {
-                            postLoginURL += "?lt="+lt+"&username="+username+"&password="+password;
-                        WAFData.proxifiedRequest(postLoginURL, {
-                            method: "Post",
-                            redirect: 'manual',
-                            //proxy:"passport",
-                            headers: {
-                                 SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
-                                 'Content-Type': 'application/x-www-form-urlencoded',
-                                 'charset': 'UTF-8'
-                                //'Access-Control-Allow-Origin': "*",
-                                //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                                //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+                            postLoginURL += "?lt=" + lt + "&username=" + username + "&password=" + password;
+                            WAFData.proxifiedRequest(postLoginURL, {
+                                method: "Post",
+                                redirect: 'manual',
+                                //proxy:"passport",
+                                headers: {
+                                    SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'charset': 'UTF-8'
+                                    //'Access-Control-Allow-Origin': "*",
+                                    //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                                    //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
 
-                            },
-                            data: {
-                                // type: selectedType,
-                                // limit: ObjectLimit
-                            },
-                            timeout: 150000,
-                            //type: "json",
-                            onComplete: function (dataResp1, headerResp1) {
+                                },
+                                data: {
+                                    // type: selectedType,
+                                    // limit: ObjectLimit
+                                },
+                                timeout: 150000,
+                                //type: "json",
+                                onComplete: function (dataResp1, headerResp1) {
 
-                                WAFData.proxifiedRequest(csrfURL, {
-                                    method: "Get",
-                                    //proxy:"passport",
-                                    headers: {
-                                        
-                                    },
-                                    data: {
-                                        
-                                    },
-                                    timeout: 150000,
-                                    type: "json",
-                                    onComplete: function (dataResp2, headerResp2) {
-                                        //lt = dataResp.lt;
-                                        console.log("-----------success---------------");
-                                        let csrfKey = dataResp2.csrf.name;
-                                        csrfValue = dataResp2.csrf.value;
-                                        csrfData.token = dataResp2.csrf.value;
-                                        console.log("csrfData-----------",csrfData)
-                                        
-                                        WAFData.proxifiedRequest(finalURL, {
-                                            method: "Get",
-                                            //proxy:"passport",
-                                            headers: {
-                                                'SecurityContext': encodeURIComponent("ctx::VPLMProjectLeader.Company Name.Actuation Technologies"),
-                                                'ENO_CSRF_TOKEN': csrfData.token
-                                                //  'Content-Type': 'application/x-www-form-urlencoded',
-                                                //  'charset': 'UTF-8'
-                                                //'Access-Control-Allow-Origin': "*",
-                                                //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                                                //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-        
-                                            },
-                                            data: {
-                                                // type: selectedType,
-                                                // limit: ObjectLimit
-                                            },
-                                            timeout: 150000,
-                                            type: "json",
-                                            onComplete: function (dataResp3, headerResp3) {
-                                                //lt = dataResp.lt;
-                                                console.log("-----------success----------2-----");
-                                               debugger;
-                                                
-                                                
-                                            },
-                                            onFailure: function (error2, responseDOMString2, headerResp2) {
-                                                debugger;
-                                                console.log("-----------Error---------------");
-                                            }
-                                        });
-                                    },
-                                    onFailure: function (error2, responseDOMString2, headerResp2) {
-                                        debugger;
-                                        console.log("-----------Error---------------");
-                                    }
-                                });
+                                    WAFData.proxifiedRequest(csrfURL, {
+                                        method: "Get",
+                                        //proxy:"passport",
+                                        headers: {
 
-                            },
-                            onFailure: function (error1, responseDOMString1, headerResp1) {
-                                debugger;
-                                console.log("-----------Error---------------");
-                            }
-                        });
-                    } 
+                                        },
+                                        data: {
+
+                                        },
+                                        timeout: 150000,
+                                        type: "json",
+                                        onComplete: function (dataResp2, headerResp2) {
+                                            //lt = dataResp.lt;
+                                            console.log("-----------success---------------");
+                                            console.log("csrfData-----------", csrfData);
+
+                                            const csrfToken = dataResp2.csrf.name;
+                                            const csrfValue = dataResp2.csrf.value;
+                                            const securityContextHeader = 'SecurityContext';
+                                            const securityContextValue = encodeURIComponent("ctx::VPLMProjectLeader.Company Name.Actuation Technologies")
+                                            
+                                            const myHeaders = new Headers();
+                                            myHeaders.append(csrfToken, csrfValue);
+                                            myHeaders.append(securityContextHeader, securityContextValue);
+
+                                            WAFData.proxifiedRequest(finalURL, {
+                                                method: "Get",
+                                                //proxy:"passport",
+                                                headers: myHeaders,
+                                                data: {
+                                                    // type: selectedType,
+                                                    // limit: ObjectLimit
+                                                },
+                                                timeout: 150000,
+                                                type: "json",
+                                                onComplete: function (dataResp3, headerResp3) {
+                                                    //lt = dataResp.lt;
+                                                    console.log("-----------success----------2-----");
+                                                    debugger;
+
+
+                                                },
+                                                onFailure: function (error2, responseDOMString2, headerResp2) {
+                                                    debugger;
+                                                    console.log("-----------Error---------------");
+                                                }
+                                            });
+                                        },
+                                        onFailure: function (error2, responseDOMString2, headerResp2) {
+                                            debugger;
+                                            console.log("-----------Error---------------");
+                                        }
+                                    });
+
+                                },
+                                onFailure: function (error1, responseDOMString1, headerResp1) {
+                                    debugger;
+                                    console.log("-----------Error---------------");
+                                }
+                            });
+                        }
 
                         //debugger;
                         //console.log("dataResp",dataResp,"headerResp",headerResp)
-                    //     let tableData = `<div class="container"><div class="table-responsive"><table class="table table-striped table-hover">
-                    // <thead>`;
-                    //     let sampleData = dataResp.data[0];
-                    //     console.log("sampleData", sampleData);
-                    //     let headers = Object.keys(sampleData);
-                    //     for (header of headers) {
-                    //         if (header != "id")
-                    //             tableData += `<th>${header}</th>`;
-                    //     }
-                    //     tableData += `</thead><tbody>`;
-                    //     for (dataJson of dataResp.data) {
+                        //     let tableData = `<div class="container"><div class="table-responsive"><table class="table table-striped table-hover">
+                        // <thead>`;
+                        //     let sampleData = dataResp.data[0];
+                        //     console.log("sampleData", sampleData);
+                        //     let headers = Object.keys(sampleData);
+                        //     for (header of headers) {
+                        //         if (header != "id")
+                        //             tableData += `<th>${header}</th>`;
+                        //     }
+                        //     tableData += `</thead><tbody>`;
+                        //     for (dataJson of dataResp.data) {
 
-                    //         let rowID = dataJson["id"];
-                    //         delete dataJson["id"];
-                    //         tableData += `<tr id=${rowID} onClick=widget.myWidget.rowOnClick(this.id)>`;
-                    //         for (value of Object.values(dataJson)) {
-                    //             tableData += `<td>${value}</td>`;
-                    //         }
-                    //         tableData += `</tr>`;
-                    //     }
+                        //         let rowID = dataJson["id"];
+                        //         delete dataJson["id"];
+                        //         tableData += `<tr id=${rowID} onClick=widget.myWidget.rowOnClick(this.id)>`;
+                        //         for (value of Object.values(dataJson)) {
+                        //             tableData += `<td>${value}</td>`;
+                        //         }
+                        //         tableData += `</tr>`;
+                        //     }
 
-                    //     tableData += `</thead></table></div></div>`;
+                        //     tableData += `</thead></table></div></div>`;
                         //widget.body.innerHTML = tableData;
                     },
                     onFailure: function (error, responseDOMString, headerResp) {
@@ -179,7 +172,7 @@ define("EmersonTest/scripts/Main", [
                         //     options.onFailure(error, responseDOMString, headerResp, options.callbackData);
                         // }
                     }
-                }); 
+                });
 
 
 
