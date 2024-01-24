@@ -30,7 +30,7 @@ define("EmersonTest/scripts/Main", [
                 let ltURL = "https://r1132101608061-eu1.iam.3dexperience.3ds.com/login?action=get_auth_params";
                 let postLoginURL = "https://r1132101608061-eu1.iam.3dexperience.3ds.com/login";
                 let csrfURL = "https://r1132101608061-usw1-space.3dexperience.3ds.com/enovia/resources/v1/application/CSRF?tenant=R1132101608061"
-                let finalURL = "https://r1132101608061-usw1-space.3dexperience.3ds.com/enovia/resources/v1/modeler/dslc/changeaction/9FB5FEC3ED240000657938EC00002F87";
+                let finalURL = "https://r1132101608061-usw1-space.3dexperience.3ds.com/enovia/resources/v1/modeler/dslc/changeaction/search";
 
                 let lt = "";
                 let username = "c00004755994";
@@ -110,8 +110,8 @@ define("EmersonTest/scripts/Main", [
                                             method: "Get",
                                             //proxy:"passport",
                                             headers: {
-                                                SecurityContext: encodeURIComponent("VPLMProjectLeader.Company Name.Common Space"),
-                                                ENO_CSRF_TOKEN: csrfValue
+                                                'SecurityContext': encodeURIComponent("VPLMProjectLeader.Company Name.Common Space"),
+                                                'ENO_CSRF_TOKEN': csrfValue
                                                 //  'Content-Type': 'application/x-www-form-urlencoded',
                                                 //  'charset': 'UTF-8'
                                                 //'Access-Control-Allow-Origin': "*",
