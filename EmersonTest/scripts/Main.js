@@ -8,8 +8,7 @@
 define("EmersonTest/scripts/Main", [
     "DS/PlatformAPI/PlatformAPI",
     "DS/WAFData/WAFData",
-    "DS/DataDragAndDrop/DataDragAndDrop",
-    "css!EmersonTest/Dependencies/bootstrap/css/bootstrap.css"],
+    "DS/DataDragAndDrop/DataDragAndDrop"],
     function (PlatformAPI, WAFData, DataDragAndDrop) {
 
         var myWidget = {
@@ -27,7 +26,7 @@ define("EmersonTest/scripts/Main", [
             },
             getData: function () {
 
-
+                console.log("-------Hello Test-----------")
                 let ltURL = "https://r1132101608061-eu1.iam.3dexperience.3ds.com/login?action=get_auth_params";
                 let postLoginURL = "https://r1132101608061-eu1.iam.3dexperience.3ds.com/login";
                 let csrfURL = "https://r1132101608061-usw1-space.3dexperience.3ds.com/enovia/resources/v1/application/CSRF?tenant=R1132101608061"
