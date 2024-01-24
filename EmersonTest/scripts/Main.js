@@ -109,8 +109,8 @@ define("EmersonTest/scripts/Main", [
                                             method: "Get",
                                             //proxy:"passport",
                                             headers: {
-                                                SecurityContext: "ctx::VPLMProjectLeader.Company Name.Common Space",
-                                                csrfKey: csrfValue
+                                                SecurityContext: encodeURIComponent("ctx::VPLMProjectLeader.Company Name.Common Space"),
+                                                ENO_CSRF_TOKEN: csrfValue
                                                 //  'Content-Type': 'application/x-www-form-urlencoded',
                                                 //  'charset': 'UTF-8'
                                                 //'Access-Control-Allow-Origin': "*",
