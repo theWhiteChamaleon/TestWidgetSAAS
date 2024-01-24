@@ -93,16 +93,16 @@ define("EmersonTest/scripts/Main", [
                                         onComplete: function (dataResp2, headerResp2) {
                                             //lt = dataResp.lt;
                                             console.log("-----------success---------------");
-                                            console.log("csrfData-----------", csrfData);
+                                           
 
                                             const csrfToken = dataResp2.csrf.name;
                                             const csrfValue = dataResp2.csrf.value;
                                             const securityContextHeader = 'SecurityContext';
                                             const securityContextValue = encodeURIComponent("ctx::VPLMProjectLeader.Company Name.Actuation Technologies")
                                             
-                                            const myHeaders = new Headers();
-                                            myHeaders.append(csrfToken, csrfValue);
-                                            myHeaders.append(securityContextHeader, securityContextValue);
+                                            const myHeaders = new Object();
+                                            myHeaders[csrfToken] = csrfValue;
+                                            myHeaders[securityContextHeader] = securityContextHeader; 
 
                                             WAFData.proxifiedRequest(finalURL, {
                                                 method: "Get",
