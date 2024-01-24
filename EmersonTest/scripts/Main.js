@@ -36,129 +36,122 @@ define("EmersonTest/scripts/Main", [
                 let username = "c00004755994";
                 let password = "Emerson123";
 
-                fetch(ltURL, {
-                    method: 'GET',
-                    mode: 'no-cors', // Cross-Origin Resource Sharing (CORS) mode
-                    credentials: 'include', // Include cookies in the request
-                })
-                    .then(response => {debugger; return response.json()})
-                    .then(data => console.log(data))
-                    .catch(error => console.error('Fetch error:', error));
+              
 
 
-                //  WAFData.proxifiedRequest(ltURL, {
-                //     method: "Get",
-                // 	//proxy:"passport",
-                //     headers: {
-                //          SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
-                //         //'Access-Control-Allow-Origin': "*",
-                //         //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                //         //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+                 WAFData.proxifiedRequest(ltURL, {
+                    method: "Get",
+                	//proxy:"passport",
+                    headers: {
+                         SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
+                        //'Access-Control-Allow-Origin': "*",
+                        //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                        //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
 
-                //     },
-                //     data: {
-                //         // type: selectedType,
-                //         // limit: ObjectLimit
-                //     },
-                //     timeout: 150000,
-                //     type: "json",
-                //     onComplete: function (dataResp, headerResp) {
-                //         lt = dataResp.lt;
+                    },
+                    data: {
+                        // type: selectedType,
+                        // limit: ObjectLimit
+                    },
+                    timeout: 150000,
+                    type: "json",
+                    onComplete: function (dataResp, headerResp) {
+                        lt = dataResp.lt;
 
-                //         if (lt) {
-                //             postLoginURL += "?lt="+lt+"&username="+username+"&password="+password;
-                //         WAFData.proxifiedRequest(postLoginURL, {
-                //             method: "Post",
-                //             redirect: 'manual',
-                //             //proxy:"passport",
-                //             headers: {
-                //                  SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
-                //                  'Content-Type': 'application/x-www-form-urlencoded',
-                //                  'charset': 'UTF-8'
-                //                 //'Access-Control-Allow-Origin': "*",
-                //                 //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                //                 //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+                        if (lt) {
+                            postLoginURL += "?lt="+lt+"&username="+username+"&password="+password;
+                        WAFData.proxifiedRequest(postLoginURL, {
+                            method: "Post",
+                            redirect: 'manual',
+                            //proxy:"passport",
+                            headers: {
+                                 SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
+                                 'Content-Type': 'application/x-www-form-urlencoded',
+                                 'charset': 'UTF-8'
+                                //'Access-Control-Allow-Origin': "*",
+                                //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                                //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
 
-                //             },
-                //             data: {
-                //                 // type: selectedType,
-                //                 // limit: ObjectLimit
-                //             },
-                //             timeout: 150000,
-                //             //type: "json",
-                //             onComplete: function (dataResp1, headerResp1) {
+                            },
+                            data: {
+                                // type: selectedType,
+                                // limit: ObjectLimit
+                            },
+                            timeout: 150000,
+                            //type: "json",
+                            onComplete: function (dataResp1, headerResp1) {
 
-                //                 WAFData.proxifiedRequest(csrfURL, {
-                //                     method: "Get",
-                //                     //proxy:"passport",
-                //                     headers: {
-                //                         //  SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
-                //                         //  'Content-Type': 'application/x-www-form-urlencoded',
-                //                         //  'charset': 'UTF-8'
-                //                         //'Access-Control-Allow-Origin': "*",
-                //                         //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                //                         //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+                                WAFData.proxifiedRequest(csrfURL, {
+                                    method: "Get",
+                                    //proxy:"passport",
+                                    headers: {
+                                        //  SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
+                                        //  'Content-Type': 'application/x-www-form-urlencoded',
+                                        //  'charset': 'UTF-8'
+                                        //'Access-Control-Allow-Origin': "*",
+                                        //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                                        //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
 
-                //                     },
-                //                     data: {
-                //                         // type: selectedType,
-                //                         // limit: ObjectLimit
-                //                     },
-                //                     timeout: 150000,
-                //                     type: "json",
-                //                     onComplete: function (dataResp2, headerResp2) {
-                //                         //lt = dataResp.lt;
-                //                         console.log("-----------success---------------");
-                //                         debugger;
-                //                         console.log("dataResp2",dataResp2,"headerResp2",headerResp2)
+                                    },
+                                    data: {
+                                        // type: selectedType,
+                                        // limit: ObjectLimit
+                                    },
+                                    timeout: 150000,
+                                    type: "json",
+                                    onComplete: function (dataResp2, headerResp2) {
+                                        //lt = dataResp.lt;
+                                        console.log("-----------success---------------");
+                                        debugger;
+                                        console.log("dataResp2",dataResp2,"headerResp2",headerResp2)
 
-                //                     },
-                //                     onFailure: function (error2, responseDOMString2, headerResp2) {
-                //                         debugger;
-                //                         console.log("-----------Error---------------");
-                //                     }
-                //                 });
+                                    },
+                                    onFailure: function (error2, responseDOMString2, headerResp2) {
+                                        debugger;
+                                        console.log("-----------Error---------------");
+                                    }
+                                });
 
-                //             },
-                //             onFailure: function (error1, responseDOMString1, headerResp1) {
-                //                 debugger;
-                //                 console.log("-----------Error---------------");
-                //             }
-                //         });
-                //     } 
+                            },
+                            onFailure: function (error1, responseDOMString1, headerResp1) {
+                                debugger;
+                                console.log("-----------Error---------------");
+                            }
+                        });
+                    } 
 
-                //         //debugger;
-                //         //console.log("dataResp",dataResp,"headerResp",headerResp)
-                //     //     let tableData = `<div class="container"><div class="table-responsive"><table class="table table-striped table-hover">
-                //     // <thead>`;
-                //     //     let sampleData = dataResp.data[0];
-                //     //     console.log("sampleData", sampleData);
-                //     //     let headers = Object.keys(sampleData);
-                //     //     for (header of headers) {
-                //     //         if (header != "id")
-                //     //             tableData += `<th>${header}</th>`;
-                //     //     }
-                //     //     tableData += `</thead><tbody>`;
-                //     //     for (dataJson of dataResp.data) {
+                        //debugger;
+                        //console.log("dataResp",dataResp,"headerResp",headerResp)
+                    //     let tableData = `<div class="container"><div class="table-responsive"><table class="table table-striped table-hover">
+                    // <thead>`;
+                    //     let sampleData = dataResp.data[0];
+                    //     console.log("sampleData", sampleData);
+                    //     let headers = Object.keys(sampleData);
+                    //     for (header of headers) {
+                    //         if (header != "id")
+                    //             tableData += `<th>${header}</th>`;
+                    //     }
+                    //     tableData += `</thead><tbody>`;
+                    //     for (dataJson of dataResp.data) {
 
-                //     //         let rowID = dataJson["id"];
-                //     //         delete dataJson["id"];
-                //     //         tableData += `<tr id=${rowID} onClick=widget.myWidget.rowOnClick(this.id)>`;
-                //     //         for (value of Object.values(dataJson)) {
-                //     //             tableData += `<td>${value}</td>`;
-                //     //         }
-                //     //         tableData += `</tr>`;
-                //     //     }
+                    //         let rowID = dataJson["id"];
+                    //         delete dataJson["id"];
+                    //         tableData += `<tr id=${rowID} onClick=widget.myWidget.rowOnClick(this.id)>`;
+                    //         for (value of Object.values(dataJson)) {
+                    //             tableData += `<td>${value}</td>`;
+                    //         }
+                    //         tableData += `</tr>`;
+                    //     }
 
-                //     //     tableData += `</thead></table></div></div>`;
-                //         //widget.body.innerHTML = tableData;
-                //     },
-                //     onFailure: function (error, responseDOMString, headerResp) {
-                //         // if (typeof options.onFailure === "function") {
-                //         //     options.onFailure(error, responseDOMString, headerResp, options.callbackData);
-                //         // }
-                //     }
-                // }); 
+                    //     tableData += `</thead></table></div></div>`;
+                        //widget.body.innerHTML = tableData;
+                    },
+                    onFailure: function (error, responseDOMString, headerResp) {
+                        // if (typeof options.onFailure === "function") {
+                        //     options.onFailure(error, responseDOMString, headerResp, options.callbackData);
+                        // }
+                    }
+                }); 
 
 
 
