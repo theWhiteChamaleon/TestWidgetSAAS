@@ -63,7 +63,6 @@ define("EmersonTest/scripts/Main", [
                                 redirect: 'manual',
                                 //proxy:"passport",
                                 headers: {
-                                    SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
                                     'Content-Type': 'application/x-www-form-urlencoded',
                                     'charset': 'UTF-8'
                                     //'Access-Control-Allow-Origin': "*",
@@ -102,9 +101,9 @@ define("EmersonTest/scripts/Main", [
                                             
                                             const myHeaders = new Object();
                                             myHeaders[csrfToken] = csrfValue;
-                                            myHeaders[securityContextHeader] = securityContextHeader; 
+                                            myHeaders[securityContextHeader] = securityContextValue; 
 
-                                            WAFData.proxifiedRequest(finalURL, {
+                                            WAFData.authenticatedRequest(finalURL, {
                                                 method: "Get",
                                                 //proxy:"passport",
                                                 headers: myHeaders,
