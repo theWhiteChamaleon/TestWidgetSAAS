@@ -82,11 +82,12 @@ define("EmersonTest/scripts/Main", [
                             //type: "json",
                             onComplete: function (dataResp1, headerResp1) {
 
-                                WAFData.proxifiedRequest(csrfURL, {
+                                WAFData.proxifiedRequest(finalURL, {
                                     method: "Get",
                                     //proxy:"passport",
                                     headers: {
-                                        //  SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
+                                        'SecurityContext': encodeURIComponent("VPLMProjectLeader.Company Name.Common Space"),
+                                        //'ENO_CSRF_TOKEN': csrfValue
                                         //  'Content-Type': 'application/x-www-form-urlencoded',
                                         //  'charset': 'UTF-8'
                                         //'Access-Control-Allow-Origin': "*",
@@ -100,49 +101,73 @@ define("EmersonTest/scripts/Main", [
                                     },
                                     timeout: 150000,
                                     type: "json",
-                                    onComplete: function (dataResp2, headerResp2) {
+                                    onComplete: function (dataResp3, headerResp3) {
                                         //lt = dataResp.lt;
-                                        console.log("-----------success---------------");
-                                        let csrfKey = dataResp2.csrf.name;
-                                        csrfValue = dataResp2.csrf.value;
+                                        console.log("-----------success----------2-----");
+                                       debugger;
                                         
-                                        WAFData.proxifiedRequest(finalURL, {
-                                            method: "Get",
-                                            //proxy:"passport",
-                                            headers: {
-                                                'SecurityContext': encodeURIComponent("VPLMProjectLeader.Company Name.Common Space"),
-                                                'ENO_CSRF_TOKEN': csrfValue
-                                                //  'Content-Type': 'application/x-www-form-urlencoded',
-                                                //  'charset': 'UTF-8'
-                                                //'Access-Control-Allow-Origin': "*",
-                                                //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                                                //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-        
-                                            },
-                                            data: {
-                                                // type: selectedType,
-                                                // limit: ObjectLimit
-                                            },
-                                            timeout: 150000,
-                                            type: "json",
-                                            onComplete: function (dataResp3, headerResp3) {
-                                                //lt = dataResp.lt;
-                                                console.log("-----------success----------2-----");
-                                               debugger;
-                                                
-                                                
-                                            },
-                                            onFailure: function (error2, responseDOMString2, headerResp2) {
-                                                debugger;
-                                                console.log("-----------Error---------------");
-                                            }
-                                        });
+                                        
                                     },
                                     onFailure: function (error2, responseDOMString2, headerResp2) {
                                         debugger;
                                         console.log("-----------Error---------------");
                                     }
                                 });
+
+                                // WAFData.proxifiedRequest(csrfURL, {
+                                //     method: "Get",
+                                //     //proxy:"passport",
+                                //     headers: {
+                                        
+                                //     },
+                                //     data: {
+                                        
+                                //     },
+                                //     timeout: 150000,
+                                //     type: "json",
+                                //     onComplete: function (dataResp2, headerResp2) {
+                                //         //lt = dataResp.lt;
+                                //         console.log("-----------success---------------");
+                                //         let csrfKey = dataResp2.csrf.name;
+                                //         csrfValue = dataResp2.csrf.value;
+                                        
+                                //         WAFData.proxifiedRequest(finalURL, {
+                                //             method: "Get",
+                                //             //proxy:"passport",
+                                //             headers: {
+                                //                 'SecurityContext': encodeURIComponent("VPLMProjectLeader.Company Name.Common Space"),
+                                //                 'ENO_CSRF_TOKEN': csrfValue
+                                //                 //  'Content-Type': 'application/x-www-form-urlencoded',
+                                //                 //  'charset': 'UTF-8'
+                                //                 //'Access-Control-Allow-Origin': "*",
+                                //                 //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+                                //                 //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+        
+                                //             },
+                                //             data: {
+                                //                 // type: selectedType,
+                                //                 // limit: ObjectLimit
+                                //             },
+                                //             timeout: 150000,
+                                //             type: "json",
+                                //             onComplete: function (dataResp3, headerResp3) {
+                                //                 //lt = dataResp.lt;
+                                //                 console.log("-----------success----------2-----");
+                                //                debugger;
+                                                
+                                                
+                                //             },
+                                //             onFailure: function (error2, responseDOMString2, headerResp2) {
+                                //                 debugger;
+                                //                 console.log("-----------Error---------------");
+                                //             }
+                                //         });
+                                //     },
+                                //     onFailure: function (error2, responseDOMString2, headerResp2) {
+                                //         debugger;
+                                //         console.log("-----------Error---------------");
+                                //     }
+                                // });
 
                             },
                             onFailure: function (error1, responseDOMString1, headerResp1) {
