@@ -36,7 +36,8 @@ define("EmersonTest/scripts/Main", [
                 let username = "c00004755994";
                 let password = "Emerson123";
                 let bodyhtml = "";
-
+                bodyhtml += "<div class='grid-container' style='display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;grid-gap: 1.5rem;margin-left: 50px;overflow: auto;height: 100vh;margin-right: 20px;'>"
+                bodyhtml += "<div style='grid-column: span 4;display: flex;justify-content: center;align-items: center;background-color: lightblue;grid-row: span 4;font-size: large;font-weight: bold;'>Change Action List</div>";
 
                 WAFData.proxifiedRequest(ltURL, {
                     method: "Get",
@@ -117,7 +118,8 @@ define("EmersonTest/scripts/Main", [
                                                 onComplete: function (dataResp3, headerResp3) {
                                                     //lt = dataResp.lt;
                                                     let changeActionList = dataResp3.changeAction;
-                                                    for (let changeAction of changeActionList) {
+                                                    for (let changeActionCount = 0;  changeActionCount < changeActionList.length; changeActionCount++) {
+                                                        changeAction = changeActionList[changeActionCount];
                                                         let source = changeAction.source;
                                                         let relativePathUrl = changeAction.relativePath;
 
@@ -138,7 +140,18 @@ define("EmersonTest/scripts/Main", [
                                                             type: "json",
                                                             onComplete: function (dataResp4, headerResp4) {
                                                                 let caTitle = dataResp4.title;
-                                                                debugger;
+                                                                bodyhtml += "<div class='grid-items' style='font-size: small;background-color: #FFFBDF;padding: 10px;'>";
+                                                                bodyhtml += "<div><b>Title :</b> "+caTitle+"</div>";
+                                                                bodyhtml += "<div><b>Name :</b> "+dataResp4.name+"</div>";
+                                                                bodyhtml += "<div><b>Owner :</b> "+dataResp4.owner+"</div>";
+                                                                bodyhtml += "<div><b>Collab Space :</b> "+dataResp4.collabSpace+"</div>";
+                                                                bodyhtml += "</div>";
+                                                                
+                                                                if (changeActionCount == changeActionList.length -1) {
+                                                                   console.log("-----------bodyhtml---------------", bodyhtml);
+                                                                    bodyhtml += "</div>"
+                                                                    widget.body.innerHTML = bodyhtml;
+                                                                }
 
                                                             },
                                                             onFailure: function (error2, responseDOMString2, headerResp2) {
@@ -146,7 +159,7 @@ define("EmersonTest/scripts/Main", [
                                                                 console.log("-----------Error---------------");
                                                             }
                                                         });
-                                                        console.log("-----------bodyhtml---------------", bodyhtml);
+                                                        
 
 
                                                     }
