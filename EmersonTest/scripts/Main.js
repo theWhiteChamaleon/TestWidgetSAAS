@@ -1,9 +1,3 @@
-// require.config({
-//     paths: {
-//         vue: "./EmersonTest/Dependencies/vue/vue"
-//     }
-// });
-
 
 define("EmersonTest/scripts/Main", [
     "DS/PlatformAPI/PlatformAPI",
@@ -41,17 +35,9 @@ define("EmersonTest/scripts/Main", [
 
                 WAFData.proxifiedRequest(ltURL, {
                     method: "Get",
-                    //proxy:"passport",
                     headers: {
-                        SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL",
-                        //'Access-Control-Allow-Origin': "*",
-                        //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                        //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-
                     },
                     data: {
-                        // type: selectedType,
-                        // limit: ObjectLimit
                     },
                     timeout: 150000,
                     type: "json",
@@ -67,14 +53,8 @@ define("EmersonTest/scripts/Main", [
                                 headers: {
                                     'Content-Type': 'application/x-www-form-urlencoded',
                                     'charset': 'UTF-8'
-                                    //'Access-Control-Allow-Origin': "*",
-                                    //'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-                                    //'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-
                                 },
                                 data: {
-                                    // type: selectedType,
-                                    // limit: ObjectLimit
                                 },
                                 timeout: 150000,
                                 //type: "json",
@@ -82,7 +62,6 @@ define("EmersonTest/scripts/Main", [
 
                                     WAFData.proxifiedRequest(csrfURL, {
                                         method: "Get",
-                                        //proxy:"passport",
                                         headers: {
 
                                         },
@@ -92,9 +71,6 @@ define("EmersonTest/scripts/Main", [
                                         timeout: 150000,
                                         type: "json",
                                         onComplete: function (dataResp2, headerResp2) {
-                                            //lt = dataResp.lt;
-                                            console.log("-----------success---------------");
-
 
                                             const csrfToken = dataResp2.csrf.name;
                                             const csrfValue = dataResp2.csrf.value;
@@ -107,16 +83,12 @@ define("EmersonTest/scripts/Main", [
 
                                             WAFData.authenticatedRequest(finalURL, {
                                                 method: "Get",
-                                                //proxy:"passport",
                                                 headers: myHeaders,
                                                 data: {
-                                                    // type: selectedType,
-                                                    // limit: ObjectLimit
                                                 },
                                                 timeout: 150000,
                                                 type: "json",
                                                 onComplete: function (dataResp3, headerResp3) {
-                                                    //lt = dataResp.lt;
                                                     let changeActionList = dataResp3.changeAction;
                                                     for (let changeActionCount = 0;  changeActionCount < changeActionList.length; changeActionCount++) {
                                                         changeAction = changeActionList[changeActionCount];
@@ -126,12 +98,8 @@ define("EmersonTest/scripts/Main", [
 
                                                         let caPropURL = source + relativePathUrl;
 
-
-
-
                                                         WAFData.authenticatedRequest(caPropURL, {
                                                             method: "Get",
-                                                            //proxy:"passport",
                                                             headers: myHeaders,
                                                             data: {
 
@@ -148,7 +116,6 @@ define("EmersonTest/scripts/Main", [
                                                                 bodyhtml += "</div>";
                                                                 
                                                                 if (changeActionCount == changeActionList.length -1) {
-                                                                   console.log("-----------bodyhtml---------------", bodyhtml);
                                                                     bodyhtml += "</div>"
                                                                     widget.body.innerHTML = bodyhtml;
                                                                 }
@@ -156,12 +123,9 @@ define("EmersonTest/scripts/Main", [
                                                             },
                                                             onFailure: function (error2, responseDOMString2, headerResp2) {
                                                                 debugger;
-                                                                console.log("-----------Error---------------");
                                                             }
                                                         });
                                                         
-
-
                                                     }
 
 
@@ -169,58 +133,28 @@ define("EmersonTest/scripts/Main", [
                                                 },
                                                 onFailure: function (error2, responseDOMString2, headerResp2) {
                                                     debugger;
-                                                    console.log("-----------Error---------------");
+                                                 
                                                 }
                                             });
                                         },
                                         onFailure: function (error2, responseDOMString2, headerResp2) {
                                             debugger;
-                                            console.log("-----------Error---------------");
+                                            
                                         }
                                     });
 
                                 },
                                 onFailure: function (error1, responseDOMString1, headerResp1) {
                                     debugger;
-                                    console.log("-----------Error---------------");
+                                    
                                 }
                             });
                         }
 
-                        //debugger;
-                        //console.log("dataResp",dataResp,"headerResp",headerResp)
-                        //     let tableData = `<div class="container"><div class="table-responsive"><table class="table table-striped table-hover">
-                        // <thead>`;
-                        //     let sampleData = dataResp.data[0];
-                        //     console.log("sampleData", sampleData);
-                        //     let headers = Object.keys(sampleData);
-                        //     for (header of headers) {
-                        //         if (header != "id")
-                        //             tableData += `<th>${header}</th>`;
-                        //     }
-                        //     tableData += `</thead><tbody>`;
-                        //     for (dataJson of dataResp.data) {
-
-                        //         let rowID = dataJson["id"];
-                        //         delete dataJson["id"];
-                        //         tableData += `<tr id=${rowID} onClick=widget.myWidget.rowOnClick(this.id)>`;
-                        //         for (value of Object.values(dataJson)) {
-                        //             tableData += `<td>${value}</td>`;
-                        //         }
-                        //         tableData += `</tr>`;
-                        //     }
-
-                        //     tableData += `</thead></table></div></div>`;
-                        //widget.body.innerHTML = tableData;
                     },
                     onFailure: function (error, responseDOMString, headerResp) {
-                        // if (typeof options.onFailure === "function") {
-                        //     options.onFailure(error, responseDOMString, headerResp, options.callbackData);
-                        // }
                     }
                 });
-
-
 
             }
 
