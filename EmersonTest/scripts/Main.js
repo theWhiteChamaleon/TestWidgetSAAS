@@ -35,7 +35,8 @@ define("EmersonTest/scripts/Main", [
                 let lt = "";
                 let username = "c00004755994";
                 let password = "Emerson123";
-             
+                let bodyhtml = "";
+
 
                 WAFData.proxifiedRequest(ltURL, {
                     method: "Get",
@@ -92,16 +93,16 @@ define("EmersonTest/scripts/Main", [
                                         onComplete: function (dataResp2, headerResp2) {
                                             //lt = dataResp.lt;
                                             console.log("-----------success---------------");
-                                           
+
 
                                             const csrfToken = dataResp2.csrf.name;
                                             const csrfValue = dataResp2.csrf.value;
                                             const securityContextHeader = 'SecurityContext';
                                             const securityContextValue = encodeURIComponent("ctx::VPLMProjectLeader.Company Name.Actuation Technologies")
-                                            
+
                                             const myHeaders = new Object();
                                             myHeaders[csrfToken] = csrfValue;
-                                            myHeaders[securityContextHeader] = securityContextValue; 
+                                            myHeaders[securityContextHeader] = securityContextValue;
 
                                             WAFData.authenticatedRequest(finalURL, {
                                                 method: "Get",
@@ -115,8 +116,41 @@ define("EmersonTest/scripts/Main", [
                                                 type: "json",
                                                 onComplete: function (dataResp3, headerResp3) {
                                                     //lt = dataResp.lt;
-                                                    console.log("-----------success----------2-----");
-                                                    debugger;
+                                                    let changeActionList = dataResp3.changeAction;
+                                                    for (let changeAction of changeActionList) {
+                                                        let source = changeAction.source;
+                                                        let relativePathUrl = changeAction.relativePath;
+
+
+                                                        let caPropURL = source + relativePathUrl;
+
+
+
+
+                                                        WAFData.authenticatedRequest(caPropURL, {
+                                                            method: "Get",
+                                                            //proxy:"passport",
+                                                            headers: myHeaders,
+                                                            data: {
+
+                                                            },
+                                                            timeout: 150000,
+                                                            type: "json",
+                                                            onComplete: function (dataResp4, headerResp4) {
+                                                                let caTitle = dataResp4.title;
+                                                                debugger;
+
+                                                            },
+                                                            onFailure: function (error2, responseDOMString2, headerResp2) {
+                                                                debugger;
+                                                                console.log("-----------Error---------------");
+                                                            }
+                                                        });
+                                                        console.log("-----------bodyhtml---------------", bodyhtml);
+
+
+                                                    }
+
 
 
                                                 },
