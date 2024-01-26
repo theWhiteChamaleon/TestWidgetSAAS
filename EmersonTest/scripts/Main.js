@@ -27,12 +27,13 @@ define("EmersonTest/scripts/Main", [
                 let finalURL = "https://r1132101608061-usw1-space.3dexperience.3ds.com/enovia/resources/v1/modeler/dslc/changeaction/search";
 
                 let lt = "";
-                let username = "c00004755994";
-                let password = "Emerson123";
+                let username = widget.getValue("Username");
+                let password = widget.getValue("Password");
                 let bodyhtml = "";
                 bodyhtml += "<div class='grid-container' style='display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;grid-gap: 1.5rem;margin-left: 50px;overflow: auto;height: 100vh;margin-right: 20px;'>"
                 bodyhtml += "<div style='grid-column: span 4;display: flex;justify-content: center;align-items: center;background-color: lightblue;grid-row: span 4;font-size: large;font-weight: bold;'>Change Action List</div>";
 
+                if (username && password) {
                 WAFData.proxifiedRequest(ltURL, {
                     method: "Get",
                     headers: {
@@ -155,6 +156,9 @@ define("EmersonTest/scripts/Main", [
                     onFailure: function (error, responseDOMString, headerResp) {
                     }
                 });
+            } else {
+                widget.body.innerHTML = "Please enter cornells username password in preferences";
+            }
 
             }
 
