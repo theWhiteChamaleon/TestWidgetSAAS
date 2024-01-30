@@ -15,7 +15,7 @@ define("EmersonTest/scripts/Main", [
 
             },
             updateWidget: function () {
-                alert("In updateWidget");
+                // alert("In updateWidget");
                 myWidget.getData();
             },
             getData: function () {
@@ -35,7 +35,7 @@ define("EmersonTest/scripts/Main", [
                 bodyhtml += "<div style='grid-column: span 4;display: flex;justify-content: center;align-items: center;background-color: lightblue;grid-row: span 4;font-size: large;font-weight: bold;'>Change Action List</div>";
 
                 if (username && password) {
-                    let loadingImage = "<div style='display:flex; justify-content:center; allign-item:center; width:100vw; height:100vh;'><img src="+imageSrc+" style='height:100px; width=100px;'></div>";
+                    let loadingImage = "<div style='display:flex; justify-content:center; align-items:center; width:100vw; height:100vh;'><img src="+imageSrc+" style='height:100px; width=100px;'></div>";
                     
                     widget.body.innerHTML = loadingImage;
                     WAFData.proxifiedRequest(ltURL, {
@@ -126,7 +126,8 @@ define("EmersonTest/scripts/Main", [
                                                                     }
 
                                                                 },
-                                                                onFailure: function (error2, responseDOMString2, headerResp2) {
+                                                                onFailure: function (error4, responseDOMString4, headerResp4) {
+                                                                    widget.bodyhtml.innerHTML = "Error : "+error4;
                                                                     debugger;
                                                                 }
                                                             });
@@ -136,13 +137,15 @@ define("EmersonTest/scripts/Main", [
 
 
                                                     },
-                                                    onFailure: function (error2, responseDOMString2, headerResp2) {
+                                                    onFailure: function (error3, responseDOMString3, headerResp3) {
+                                                        widget.bodyhtml.innerHTML = "Error : "+error3;
                                                         debugger;
 
                                                     }
                                                 });
                                             },
                                             onFailure: function (error2, responseDOMString2, headerResp2) {
+                                                widget.bodyhtml.innerHTML = "Error : "+error2;
                                                 debugger;
 
                                             }
@@ -150,6 +153,7 @@ define("EmersonTest/scripts/Main", [
 
                                     },
                                     onFailure: function (error1, responseDOMString1, headerResp1) {
+                                        widget.bodyhtml.innerHTML = "Error : "+error1;
                                         debugger;
 
                                     }
@@ -158,6 +162,7 @@ define("EmersonTest/scripts/Main", [
 
                         },
                         onFailure: function (error, responseDOMString, headerResp) {
+                            widget.bodyhtml.innerHTML = "Error : "+error; 
                         }
                     });
                 } else {
