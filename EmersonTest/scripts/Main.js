@@ -34,131 +34,133 @@ define("EmersonTest/scripts/Main", [
                 bodyhtml += "<div style='grid-column: span 4;display: flex;justify-content: center;align-items: center;background-color: lightblue;grid-row: span 4;font-size: large;font-weight: bold;'>Change Action List</div>";
 
                 if (username && password) {
-                WAFData.proxifiedRequest(ltURL, {
-                    method: "Get",
-                    headers: {
-                    },
-                    data: {
-                    },
-                    timeout: 150000,
-                    type: "json",
-                    onComplete: function (dataResp, headerResp) {
-                        lt = dataResp.lt;
+                    let loadingImage = "<div><img src='./assets/loading.gif'></div>";
+                    widget.body.innerHTML = loadingImage;
+                    WAFData.proxifiedRequest(ltURL, {
+                        method: "Get",
+                        headers: {
+                        },
+                        data: {
+                        },
+                        timeout: 150000,
+                        type: "json",
+                        onComplete: function (dataResp, headerResp) {
+                            lt = dataResp.lt;
 
-                        if (lt) {
-                            postLoginURL += "?lt=" + lt + "&username=" + username + "&password=" + password;
-                            WAFData.proxifiedRequest(postLoginURL, {
-                                method: "Post",
-                                redirect: 'manual',
-                                //proxy:"passport",
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                    'charset': 'UTF-8'
-                                },
-                                data: {
-                                },
-                                timeout: 150000,
-                                //type: "json",
-                                onComplete: function (dataResp1, headerResp1) {
+                            if (lt) {
+                                postLoginURL += "?lt=" + lt + "&username=" + username + "&password=" + password;
+                                WAFData.proxifiedRequest(postLoginURL, {
+                                    method: "Post",
+                                    redirect: 'manual',
+                                    //proxy:"passport",
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                        'charset': 'UTF-8'
+                                    },
+                                    data: {
+                                    },
+                                    timeout: 150000,
+                                    //type: "json",
+                                    onComplete: function (dataResp1, headerResp1) {
 
-                                    WAFData.proxifiedRequest(csrfURL, {
-                                        method: "Get",
-                                        headers: {
+                                        WAFData.proxifiedRequest(csrfURL, {
+                                            method: "Get",
+                                            headers: {
 
-                                        },
-                                        data: {
+                                            },
+                                            data: {
 
-                                        },
-                                        timeout: 150000,
-                                        type: "json",
-                                        onComplete: function (dataResp2, headerResp2) {
+                                            },
+                                            timeout: 150000,
+                                            type: "json",
+                                            onComplete: function (dataResp2, headerResp2) {
 
-                                            const csrfToken = dataResp2.csrf.name;
-                                            const csrfValue = dataResp2.csrf.value;
-                                            const securityContextHeader = 'SecurityContext';
-                                            const securityContextValue = encodeURIComponent("ctx::VPLMProjectLeader.Company Name.Actuation Technologies")
+                                                const csrfToken = dataResp2.csrf.name;
+                                                const csrfValue = dataResp2.csrf.value;
+                                                const securityContextHeader = 'SecurityContext';
+                                                const securityContextValue = encodeURIComponent("ctx::VPLMProjectLeader.Company Name.Actuation Technologies")
 
-                                            const myHeaders = new Object();
-                                            myHeaders[csrfToken] = csrfValue;
-                                            myHeaders[securityContextHeader] = securityContextValue;
+                                                const myHeaders = new Object();
+                                                myHeaders[csrfToken] = csrfValue;
+                                                myHeaders[securityContextHeader] = securityContextValue;
 
-                                            WAFData.authenticatedRequest(finalURL, {
-                                                method: "Get",
-                                                headers: myHeaders,
-                                                data: {
-                                                },
-                                                timeout: 150000,
-                                                type: "json",
-                                                onComplete: function (dataResp3, headerResp3) {
-                                                    let changeActionList = dataResp3.changeAction;
-                                                    for (let changeActionCount = 0;  changeActionCount < changeActionList.length; changeActionCount++) {
-                                                        changeAction = changeActionList[changeActionCount];
-                                                        let source = changeAction.source;
-                                                        let relativePathUrl = changeAction.relativePath;
+                                                WAFData.authenticatedRequest(finalURL, {
+                                                    method: "Get",
+                                                    headers: myHeaders,
+                                                    data: {
+                                                    },
+                                                    timeout: 150000,
+                                                    type: "json",
+                                                    onComplete: function (dataResp3, headerResp3) {
+                                                        let changeActionList = dataResp3.changeAction;
+                                                        for (let changeActionCount = 0; changeActionCount < changeActionList.length; changeActionCount++) {
+                                                            changeAction = changeActionList[changeActionCount];
+                                                            let source = changeAction.source;
+                                                            let relativePathUrl = changeAction.relativePath;
 
 
-                                                        let caPropURL = source + relativePathUrl;
+                                                            let caPropURL = source + relativePathUrl;
 
-                                                        WAFData.authenticatedRequest(caPropURL, {
-                                                            method: "Get",
-                                                            headers: myHeaders,
-                                                            data: {
+                                                            WAFData.authenticatedRequest(caPropURL, {
+                                                                method: "Get",
+                                                                headers: myHeaders,
+                                                                data: {
 
-                                                            },
-                                                            timeout: 150000,
-                                                            type: "json",
-                                                            onComplete: function (dataResp4, headerResp4) {
-                                                                let caTitle = dataResp4.title;
-                                                                bodyhtml += "<div class='grid-items' style='font-size: small;background-color: #FFFBDF;padding: 10px;'>";
-                                                                bodyhtml += "<div><b>Title :</b> "+caTitle+"</div>";
-                                                                bodyhtml += "<div><b>Name :</b> "+dataResp4.name+"</div>";
-                                                                bodyhtml += "<div><b>Owner :</b> "+dataResp4.owner+"</div>";
-                                                                bodyhtml += "<div><b>Collab Space :</b> "+dataResp4.collabSpace+"</div>";
-                                                                bodyhtml += "</div>";
-                                                                
-                                                                if (changeActionCount == changeActionList.length -1) {
-                                                                    bodyhtml += "</div>"
-                                                                    widget.body.innerHTML = bodyhtml;
+                                                                },
+                                                                timeout: 150000,
+                                                                type: "json",
+                                                                onComplete: function (dataResp4, headerResp4) {
+                                                                    let caTitle = dataResp4.title;
+                                                                    bodyhtml += "<div class='grid-items' style='font-size: small;background-color: #FFFBDF;padding: 10px;'>";
+                                                                    bodyhtml += "<div><b>Title :</b> " + caTitle + "</div>";
+                                                                    bodyhtml += "<div><b>Name :</b> " + dataResp4.name + "</div>";
+                                                                    bodyhtml += "<div><b>Owner :</b> " + dataResp4.owner + "</div>";
+                                                                    bodyhtml += "<div><b>Collab Space :</b> " + dataResp4.collabSpace + "</div>";
+                                                                    bodyhtml += "</div>";
+
+                                                                    if (changeActionCount == changeActionList.length - 1) {
+                                                                        bodyhtml += "</div>"
+                                                                        widget.body.innerHTML = bodyhtml;
+                                                                    }
+
+                                                                },
+                                                                onFailure: function (error2, responseDOMString2, headerResp2) {
+                                                                    debugger;
                                                                 }
+                                                            });
 
-                                                            },
-                                                            onFailure: function (error2, responseDOMString2, headerResp2) {
-                                                                debugger;
-                                                            }
-                                                        });
-                                                        
+                                                        }
+
+
+
+                                                    },
+                                                    onFailure: function (error2, responseDOMString2, headerResp2) {
+                                                        debugger;
+
                                                     }
+                                                });
+                                            },
+                                            onFailure: function (error2, responseDOMString2, headerResp2) {
+                                                debugger;
 
+                                            }
+                                        });
 
+                                    },
+                                    onFailure: function (error1, responseDOMString1, headerResp1) {
+                                        debugger;
 
-                                                },
-                                                onFailure: function (error2, responseDOMString2, headerResp2) {
-                                                    debugger;
-                                                 
-                                                }
-                                            });
-                                        },
-                                        onFailure: function (error2, responseDOMString2, headerResp2) {
-                                            debugger;
-                                            
-                                        }
-                                    });
+                                    }
+                                });
+                            }
 
-                                },
-                                onFailure: function (error1, responseDOMString1, headerResp1) {
-                                    debugger;
-                                    
-                                }
-                            });
+                        },
+                        onFailure: function (error, responseDOMString, headerResp) {
                         }
-
-                    },
-                    onFailure: function (error, responseDOMString, headerResp) {
-                    }
-                });
-            } else {
-                widget.body.innerHTML = "Please enter cornells username password in preferences";
-            }
+                    });
+                } else {
+                    widget.body.innerHTML = "Please enter cornells username password in preferences";
+                }
 
             }
 
