@@ -34,7 +34,8 @@ define("EmersonTest/scripts/Main", [
                 bodyhtml += "<div style='grid-column: span 4;display: flex;justify-content: center;align-items: center;background-color: lightblue;grid-row: span 4;font-size: large;font-weight: bold;'>Change Action List</div>";
 
                 if (username && password) {
-                    let loadingImage = "<div><img src='./assets/loading.gif'></div>";
+                    let loadingImage = "<div><img src='assets/loading.gif'></div>";
+                    debugger;
                     widget.body.innerHTML = loadingImage;
                     WAFData.proxifiedRequest(ltURL, {
                         method: "Get",
