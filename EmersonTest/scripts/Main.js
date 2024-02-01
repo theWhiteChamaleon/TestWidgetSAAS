@@ -8,8 +8,7 @@
 define("EmersonTest/scripts/Main", [
     "DS/PlatformAPI/PlatformAPI",
     "DS/WAFData/WAFData",
-	"DS/DataDragAndDrop/DataDragAndDrop",
-    "css!EmersonTest/Dependencies/bootstrap/css/bootstrap.css"],
+	"DS/DataDragAndDrop/DataDragAndDrop"],
     function (PlatformAPI, WAFData, DataDragAndDrop) {
 
         var myWidget = {
@@ -90,6 +89,7 @@ define("EmersonTest/scripts/Main", [
                         // }
                     }
                 });  */
+				debugger;
                 widget.body.innerHTML = `<div id="droppableFrame"><iframe src="https://flowproductadvisor.emerson.com/" title="description" style="width: 100vw; height: 100vh;"></iframe></div>`;
 				// widget.body.innerHTML = `<button><a href="https://3dxd10.emerson.com:442/part-management" target="_top">FCV</a></button>`;
 				
