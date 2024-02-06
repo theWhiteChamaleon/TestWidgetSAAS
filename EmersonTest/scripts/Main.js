@@ -127,8 +127,9 @@ define("EmersonTest/scripts/Main", [
                                                                     bodyhtml += "</div>";
 
                                                                     if (changeActionCount == changeActionList.length - 1) {
-                                                                        bodyhtml += "</div>"
                                                                         bodyhtml += "<a href='"+templateUrl+"' style='grid-column: span 4;display: flex;justify-content: center;align-items: center;background-color: lightblue;grid-row: span 4;font-size: large;font-weight: bold;' download>Download Template</a>"
+                                                                        debugger;
+                                                                        bodyhtml += "</div>"
                                                                         widget.body.innerHTML = bodyhtml;
                                                                     }
 
