@@ -31,11 +31,16 @@ define("EmersonTest/scripts/Main", [
                 let username = widget.getValue("Username");
                 let password = widget.getValue("Password");
                 let bodyhtml = "";
+				
+				let iconUrl = widget.getUrl();
+				iconUrl = iconUrl.substring(0, iconUrl.lastIndexOf("/"));
+				let dropIconUrl = iconUrl + "/assets/emersonLogo.PNG";
+				
                 bodyhtml += "<div class='grid-container' style='display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;grid-gap: 1.5rem;margin-left: 50px;overflow: auto;height: 100vh;margin-right: 20px;'>"
                 bodyhtml += "<div style='grid-column: span 4;display: flex;justify-content: center;align-items: center;background-color: lightblue;grid-row: span 4;font-size: large;font-weight: bold;'>Change Action List</div>";
 
                 if (username && password) {
-                    let loadingImage = "<div style='display:flex; justify-content:center; align-items:center; width:100vw; height:100vh;'><img src="+imageSrc+" style='height:100px; width=100px;'></div>";
+                    let loadingImage = "<div style='display:flex; justify-content:center; align-items:center; width:100vw; height:100vh;'><img src="+dropIconUrl+" style='height:100px; width=100px;'></div>";
                     
                     widget.body.innerHTML = loadingImage;
                     WAFData.proxifiedRequest(ltURL, {
