@@ -1,117 +1,178 @@
-// require.config({
-//     paths: {
-//         vue: "./EmersonTest/Dependencies/vue/vue"
-//     }
-// });
-
 
 define("EmersonTest/scripts/Main", [
     "DS/PlatformAPI/PlatformAPI",
     "DS/WAFData/WAFData",
-	"DS/DataDragAndDrop/DataDragAndDrop"],
+    "DS/DataDragAndDrop/DataDragAndDrop"],
     function (PlatformAPI, WAFData, DataDragAndDrop) {
 
         var myWidget = {
             ObjectId: "",
             name: "Emerson",
-			
+
             onLoad: function () {
-				widget.body.innerHTML = "Widget Training";
+                widget.body.innerHTML = "Widget Training";
                 myWidget.getData();
-
-            //     var template = `<div id="app" class="container">
-            //     <div class="row">
-            //         <div class="col">${this.name}</div>
-            //         <div class="col">test 2</div>
-            //     </div>
-            // </div>`
-
-
-                widget.setTitle("Emerson Test Widget");
-            //     widget.body.innerHTML = template;
-
-
 
             },
             updateWidget: function () {
-                alert("In updateWidget");
+                // alert("In updateWidget");
                 myWidget.getData();
             },
             getData: function () {
-				
-                
-                /* let selectedType = widget.getValue("EmersonType");
-                let ObjectLimit = widget.getValue("ObjectLimit");
-                
-                let spaceURL = "https://3dxr21x-d4.emrsn.org:447/3dspace";
-                let urlWAF = spaceURL + "/EmersonTestModel/EmersonTestService/getTestData";
-				
-                 WAFData.authenticatedRequest(urlWAF, {
-                    method: "Get",
-                    headers: {
-                        SecurityContext: "ctx::MCO Coordinator.MMH.GLOBAL"
-                    },
-                    data: {
-                        type: selectedType,
-                        limit: ObjectLimit
-                    },
-                    timeout: 150000,
-                    type: "json",
-                    onComplete: function (dataResp, headerResp) {
-                        debugger;
-                        let tableData = `<div class="container"><div class="table-responsive"><table class="table table-striped table-hover">
-                    <thead>`;
-                        let sampleData = dataResp.data[0];
-                        console.log("sampleData", sampleData);
-                        let headers = Object.keys(sampleData);
-                        for (header of headers) {
-                            if (header != "id")
-                                tableData += `<th>${header}</th>`;
-                        }
-                        tableData += `</thead><tbody>`;
-                        for (dataJson of dataResp.data) {
 
-                            let rowID = dataJson["id"];
-                            delete dataJson["id"];
-                            tableData += `<tr id=${rowID} onClick=widget.myWidget.rowOnClick(this.id)>`;
-                            for (value of Object.values(dataJson)) {
-                                tableData += `<td>${value}</td>`;
-                            }
-                            tableData += `</tr>`;
-                        }
-
-                        tableData += `</thead></table></div></div>`;
-                        widget.body.innerHTML = tableData;
-                    },
-                    onFailure: function (error, responseDOMString, headerResp) {
-                        // if (typeof options.onFailure === "function") {
-                        //     options.onFailure(error, responseDOMString, headerResp, options.callbackData);
-                        // }
-                    }
-                });  */
-				debugger;
-                widget.body.innerHTML = `<div id="droppableFrame"><iframe src="https://emr-product-datahub-dev.azurewebsites.net" title="description" style="width: 100vw; height: 100vh;"></iframe></div>`;
-				// widget.body.innerHTML = `<button><a href="https://3dxd10.emerson.com:442/part-management" target="_top">FCV</a></button>`;
+                console.log("-------Hello Test-----------")
+                let ltURL = "https://r1132101608061-eu1.iam.3dexperience.3ds.com/login?action=get_auth_params";
+                let postLoginURL = "https://r1132101608061-eu1.iam.3dexperience.3ds.com/login";
+                let csrfURL = "https://r1132101608061-usw1-space.3dexperience.3ds.com/enovia/resources/v1/application/CSRF?tenant=R1132101608061"
+                let finalURL = "https://r1132101608061-usw1-space.3dexperience.3ds.com/enovia/resources/v1/modeler/dslc/changeaction/search";
+               
+                let lt = "";
+                let username = widget.getValue("Username");
+                let password = widget.getValue("Password");
+                let bodyhtml = "";
 				
-				// Make the frame droppable
-				let droppableFrame = widget.body.querySelector('.droppableFrame');
-				DataDragAndDrop.droppable( droppableFrame , {  
-                drop : function(data) {							    
-                   droppableFrame.style.border = "none";
-				   console.log("----------------data---------",data);
-                },
-                enter: function() {	
-                   droppableFrame.style.border = "thick dotted #0000FF";
-                },
-                over: function() {	
-                    droppableFrame.style.border = "thick dotted #0000FF";
-                }, 
-                leave: function() {
-                   droppableFrame.style.border = "none";
+				let iconUrl = widget.getUrl();
+				iconUrl = iconUrl.substring(0, iconUrl.lastIndexOf("/"));
+				let dropIconUrl = iconUrl + "/assets/emersonLogo.PNG";
+				
+                bodyhtml += "<div class='grid-container' style='display: grid;grid-template-columns: 1fr 1fr 1fr 1fr;grid-gap: 1.5rem;margin-left: 50px;overflow: auto;height: 100vh;margin-right: 20px;'>"
+                bodyhtml += "<div style='grid-column: span 4;display: flex;justify-content: center;align-items: center;background-color: lightblue;grid-row: span 4;font-size: large;font-weight: bold;'>Change Action List</div>";
+
+                if (username && password) {
+                    let loadingImage = "<div style='display:flex; justify-content:center; align-items:center; width:100vw; height:100vh;'><img src="+dropIconUrl+" style='height:100px; width=100px;'></div>";
+                    
+                    widget.body.innerHTML = loadingImage;
+                    // WAFData.proxifiedRequest(ltURL, {
+                    //     method: "Get",
+                    //     headers: {
+                    //     },
+                    //     data: {
+                    //     },
+                    //     timeout: 150000,
+                    //     type: "json",
+                    //     onComplete: function (dataResp, headerResp) {
+                    //         lt = dataResp.lt;
+
+                    //         if (lt) {
+                    //             postLoginURL += "?lt=" + lt + "&username=" + username + "&password=" + password;
+                    //             WAFData.proxifiedRequest(postLoginURL, {
+                    //                 method: "Post",
+                    //                 redirect: 'manual',
+                    //                 //proxy:"passport",
+                    //                 headers: {
+                    //                     'Content-Type': 'application/x-www-form-urlencoded',
+                    //                     'charset': 'UTF-8'
+                    //                 },
+                    //                 data: {
+                    //                 },
+                    //                 timeout: 150000,
+                    //                 //type: "json",
+                    //                 onComplete: function (dataResp1, headerResp1) {
+
+                                        WAFData.proxifiedRequest(csrfURL, {
+                                            method: "Get",
+                                            headers: {
+
+                                            },
+                                            data: {
+
+                                            },
+                                            timeout: 150000,
+                                            type: "json",
+                                            onComplete: function (dataResp2, headerResp2) {
+
+                                                const csrfToken = dataResp2.csrf.name;
+                                                const csrfValue = dataResp2.csrf.value;
+                                                const securityContextHeader = 'SecurityContext';
+                                                const securityContextValue = encodeURIComponent("ctx::VPLMProjectLeader.Company Name.Actuation Technologies")
+
+                                                const myHeaders = new Object();
+                                                myHeaders[csrfToken] = csrfValue;
+                                                myHeaders[securityContextHeader] = securityContextValue;
+
+                                                WAFData.authenticatedRequest(finalURL, {
+                                                    method: "Get",
+                                                    headers: myHeaders,
+                                                    data: {
+                                                    },
+                                                    timeout: 150000,
+                                                    type: "json",
+                                                    onComplete: function (dataResp3, headerResp3) {
+                                                        let changeActionList = dataResp3.changeAction;
+                                                        for (let changeActionCount = 0; changeActionCount < changeActionList.length; changeActionCount++) {
+                                                            changeAction = changeActionList[changeActionCount];
+                                                            let source = changeAction.source;
+                                                            let relativePathUrl = changeAction.relativePath;
+
+
+                                                            let caPropURL = source + relativePathUrl;
+
+                                                            WAFData.authenticatedRequest(caPropURL, {
+                                                                method: "Get",
+                                                                headers: myHeaders,
+                                                                data: {
+
+                                                                },
+                                                                timeout: 150000,
+                                                                type: "json",
+                                                                onComplete: function (dataResp4, headerResp4) {
+                                                                    let caTitle = dataResp4.title;
+                                                                    bodyhtml += "<div class='grid-items' style='font-size: small;background-color: #FFFBDF;padding: 10px;'>";
+                                                                    bodyhtml += "<div><b>Title :</b> " + caTitle + "</div>";
+                                                                    bodyhtml += "<div><b>Name :</b> " + dataResp4.name + "</div>";
+                                                                    bodyhtml += "<div><b>Owner :</b> " + dataResp4.owner + "</div>";
+                                                                    bodyhtml += "<div><b>Collab Space :</b> " + dataResp4.collabSpace + "</div>";
+                                                                    bodyhtml += "</div>";
+
+                                                                    if (changeActionCount == changeActionList.length - 1) {
+                                                                        bodyhtml += "</div>"
+                                                                        widget.body.innerHTML = bodyhtml;
+                                                                    }
+
+                                                                },
+                                                                onFailure: function (error4, responseDOMString4, headerResp4) {
+                                                                    widget.bodyhtml.innerHTML = "Error : "+error4;
+                                                                    debugger;
+                                                                }
+                                                            });
+
+                                                        }
+
+
+
+                                                    },
+                                                    onFailure: function (error3, responseDOMString3, headerResp3) {
+                                                        widget.bodyhtml.innerHTML = "Error : "+error3;
+                                                        debugger;
+
+                                                    }
+                                                });
+                                            },
+                                            onFailure: function (error2, responseDOMString2, headerResp2) {
+                                                widget.bodyhtml.innerHTML = "Error : "+error2;
+                                                debugger;
+
+                                            }
+                                        });
+
+                    //                 },
+                    //                 onFailure: function (error1, responseDOMString1, headerResp1) {
+                    //                     widget.bodyhtml.innerHTML = "Error : "+error1;
+                    //                     debugger;
+
+                    //                 }
+                    //             });
+                    //         }
+
+                    //     },
+                    //     onFailure: function (error, responseDOMString, headerResp) {
+                    //         widget.bodyhtml.innerHTML = "Error : "+error; 
+                    //     }
+                    // });
+                } else {
+                    widget.body.innerHTML = "Please enter cornells username password in preferences";
                 }
-            }) ;
-            }, rowOnClick: function (id) {
-                alert(id);
+
             }
 
         }
